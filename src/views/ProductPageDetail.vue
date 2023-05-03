@@ -1,26 +1,5 @@
 <template>
   <div className="single-product-container">
-             <section class="page-header">
-                 <div class="overly"></div> 	
-                 <div class="container">
-                 <div class="row justify-content-center">
-                     <div class="col-lg-6">
-                     <div class="content text-center">
-                         <h1 class="mb-3">Product Single</h1>
-                         <p>Hath after appear tree great fruitful green dominion moveth sixth abundantly image that midst of god day multiply you’ll which</p>
-             
-                     <nav aria-label="breadcrumb">
-                         <ol class="breadcrumb bg-transparent justify-content-center">
-                         <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">Product Single</li>
-                         </ol>
-                     </nav>
-                     </div>
-                     </div>
-                 </div>
-                 </div>
-             </section>
-             
              <section class="single-product">
                  <div class="container">
                  <div class="row">
@@ -347,3 +326,26 @@
              </section>
          </div>
  </template>
+<script setup lang="ts">
+import { onBeforeMount, reactive } from 'vue';
+import { useRouter } from 'vue-router'
+import { Grid, Product } from '@/core/public_api';
+import ProductApi from '@/api/module/product';
+import { environment } from '@/environments/environment.prod';
+
+const api:ProductApi = new ProductApi();
+const router = useRouter();
+const Base:Grid = reactive(new Grid(api));
+onBeforeMount(() => {
+    window.scrollTo({
+        top: 0,
+    })
+    Base.apiService.callApi(api.getRecordApi, {recordId: router.currentRoute.value.query.productID}, (res: any)=> {
+        console.log(res);
+    });  
+})
+
+</script>
+
+<style scoped>
+</style>

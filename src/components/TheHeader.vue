@@ -32,7 +32,7 @@
         
             <ul class="top-menu list-inline mb-0 d-none d-lg-block" id="top-menu">
             <li class="list-inline-item">
-              <input type="search" class="form-control rounded" placeholder="Tìm sản phẩm" aria-label="Search" aria-describedby="search-addon" />
+              <input type="search" @input="handleSearchData" class="form-control rounded" placeholder="Tìm sản phẩm" aria-label="Search" aria-describedby="search-addon" />
             </li>
             <li class="dropdown cart-nav dropdown-slide list-inline-item">
                 <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
@@ -68,4 +68,16 @@
         </nav>
 </template>
 <script setup lang="ts">
+import { Grid } from '@/core/public_api';
+import { reactive } from 'vue';
+import ProductApi from '@/api/module/product';
+
+const api:ProductApi = new ProductApi();
+
+const Base:Grid = reactive(new Grid(api));
+function handleSearchData(event: any){
+    Base.handleDebounce(600, async (event: any) => {
+      Base.store.dispatch("config/setKeyWordAction", event.target.value.trim());
+    }, event);
+}
 </script>

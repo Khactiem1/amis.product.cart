@@ -41,27 +41,26 @@
                   </div>
           
           
-              <div class="row">
-              <div class="col-lg-3 col-12 col-md-6 col-sm-6 mb-5 " >
-                  <div class="product">
-                      <div class="product-wrap">
-                          <a href="#"><img class="img-fluid w-100 mb-3 img-first" src="src/assets/images/222.jpg" alt="product-img" /></a>
-                          <a href="#"><img class="img-fluid w-100 mb-3 img-second" src="src/assets/images/322.jpg" alt="product-img" /></a>
-                      </div>
-          
-                      <div class="product-hover-overlay">
-                          <a href="#"><i class="tf-ion-android-cart"></i></a>
-                          </div>
-          
-                      <div class="product-info">
-                          <h2 class="product-title h5 mb-0"><a href="#">Sleeve linen shirt</a></h2>
-                          <span class="price">
-                              $50.10
-                          </span>
-                      </div>
-                  </div>
-                  </div>
-              </div>
+                <div class="row">
+                    <div v-for="item in ProductHome" :key="item.productID" class="col-lg-3 col-12 col-md-6 col-sm-6 mb-5 " >
+                        <div class="product">
+                            <div class="product-wrap">
+                                <RouterLink :to="`/productDetails?productID=${item.productID}`"><img class="img-fluid w-100 mb-3 img-first" :src="environment.IMAGE_API + item.avatar" alt="product-img" /></RouterLink>
+                            </div>
+                
+                            <div class="product-hover-overlay">
+                                <RouterLink to="/"><i class="tf-ion-android-cart"></i></RouterLink>
+                                </div>
+                
+                            <div class="product-info">
+                                <h2 class="product-title h5 mb-0"><RouterLink :to="`/productDetails?productID=${item.productID}`">{{ item.productName }}</RouterLink></h2>
+                                <span class="price">
+                                    {{ Base.Comma(item.price) }} đ
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
           </section>
 
@@ -76,14 +75,14 @@
                   <div class="widget-featured-entries mt-5 mt-lg-0">
                   <h4 class="mb-4 pb-3">Sản phẩm hot nhất</h4>
 
-                          <div class="media mb-3">
-                              <a class="featured-entry-thumb" href="/productdetails">
-                              <img src="src/assets/images/p-1.jpg" alt="Product thumb" width="64" class="img-fluid mr-3" />
-                          </a>
-                          <div class="media-body">
-                              <h6 class="featured-entry-title mb-0"><a href="#">Keds - Kickstart Pom Pom</a></h6>
-                              <p class="featured-entry-meta">$42.99</p>
-                          </div>
+                          <div v-for="item in ProductHot" :key="item.productID" class="media mb-3">
+                            <RouterLink class="featured-entry-thumb" :to="`/productDetails?productID=${item.productID}`">
+                                <img :src="environment.IMAGE_API + item.avatar" alt="Product thumb" width="64" class="img-fluid mr-3" />
+                            </RouterLink>
+                            <div class="media-body">
+                                <h6 class="featured-entry-title mb-0"><RouterLink :to="`/productDetails?productID=${item.productID}`">{{ item.productName }}</RouterLink></h6>
+                                <p class="featured-entry-meta">{{ Base.Comma(item.price) }} đ</p>
+                            </div>
                           </div>
                   </div>
               </div>
@@ -93,13 +92,13 @@
                   <div class="widget-featured-entries mt-5 mt-lg-0">
                   <h4 class="mb-4 pb-3">Sản phẩm giá tốt nhất</h4>
 
-                          <div class="media mb-3">
-                              <a class="featured-entry-thumb" href="/productdetails">
-                              <img src="src/assets/images/p-7.jpg" alt="Product thumb" width="64" class="img-fluid mr-3" />
-                          </a>
+                          <div v-for="item in ProductPrice" :key="item.productID"  class="media mb-3">
+                                <RouterLink class="featured-entry-thumb" :to="`/productDetails?productID=${item.productID}`">
+                                    <img :src="environment.IMAGE_API + item.avatar" alt="Product thumb" width="64" class="img-fluid mr-3" />
+                                </RouterLink>
                           <div class="media-body">
-                              <h6 class="featured-entry-title mb-0"><a href="#">Keds - Kickstart Pom Pom</a></h6>
-                              <p class="featured-entry-meta">$42.99</p>
+                              <h6 class="featured-entry-title mb-0"><RouterLink :to="`/productDetails?productID=${item.productID}`">{{ item.productName }}</RouterLink></h6>
+                              <p class="featured-entry-meta">{{ Base.Comma(item.price) }} đ</p>
                           </div>
                           </div>
                   </div>
@@ -151,3 +150,43 @@
           </section>
       </div>
 </template>
+
+<script setup lang="ts">
+import { Grid, Product } from '@/core/public_api';
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
+import ProductApi from '@/api/module/product';
+import { environment } from '@/environments/environment.prod';
+
+const api:ProductApi = new ProductApi();
+const keyWord: any = computed(() => Base.store.state.config.keyWord);
+
+/** Sử dụng base thư viện Grid đã viết */
+const Base:Grid = reactive(new Grid(api));
+const ProductHome = ref<Product []>([]);
+const ProductHot = ref<Product []>([]);
+const ProductPrice = ref<Product []>([]);
+watch(keyWord, ()=> {
+    Base.apiService.callApi(api.getProductHome, {v_KeyWord: keyWord.value}, (res: any)=> {
+        ProductHome.value = res;
+    });  
+})
+onBeforeMount(() => {
+    Base.apiService.callApi(api.getProductHome, {v_KeyWord: keyWord.value}, (res: any)=> {
+        ProductHome.value = res;
+    });  
+    Base.apiService.callApi(api.getProductHot, null, (res: any)=> {
+        ProductHot.value = res;
+    });  
+    Base.apiService.callApi(api.getProductPrice, null, (res: any)=> {
+        ProductPrice.value = res;
+    });  
+    window.scrollTo({
+        top: 0,
+    })
+})
+
+</script>
+
+<style scoped>
+
+</style>
