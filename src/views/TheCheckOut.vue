@@ -6,13 +6,13 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                 <div class="content text-center">
-                    <h1 class="mb-3">Checkout</h1>
-                    <p>Hath after appear tree great fruitful green dominion moveth sixth abundantly image that midst of god day multiply you’ll which</p>
+                    <h1 class="mb-3">Thanh toán</h1>
+                    <p>Tiến hành thanh toán để xác nhận đơn hàng của bạn với chúng tôi, chúng tôi sẽ liên hệ với bạn thời gian sớm nhất</p>
         
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent justify-content-center">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    <li class="breadcrumb-item"><router-link to="/">Trang chủ</router-link></li>
+                    <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
                     </ol>
                 </nav>
                 </div>
@@ -25,132 +25,78 @@
                 <div class="container">
                 <div class="row">
                     <div class="col-lg-8 pr-5">
-                        <div class="coupon-notice " data-toggle="modal" data-target="#coupon-modal">
+                        <div class="coupon-notice ">
                             <div class="bg-light p-3">
-                                Have a coupon? <a href="/checkout" class="showcoupon" >Click here to enter your code</a>
+                                Thanh toán với chúng tôi: HOANG ANH NGHIEP <br>
+                                Techcombank
+                                <br>
+                                19036301282015
+                                <br>
+                                Chúng tôi sẽ liên hệ thanh toán với bạn, hãy giữ lại bill
                             </div>
                         </div>
         
                         <div class="billing-details mt-5">
-                            <h4 class="mb-4">Billing Details</h4>
+                            <h4 class="mb-4">Chi tiết thanh toán</h4>
                             <form class="checkout-form">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
-                                        <label for="first_name">First Name</label>
-                                        <input type="text" class="form-control" id="first_name" placeholder="" />
+                                        <label for="first_name">Nhập tên của bạn (* Bắt buộc điền)</label>
+                                        <input v-model="order.userName" type="text" class="form-control" id="first_name" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
-                                        <label for="last_name">Last Name</label>
-                                        <input type="text" class="form-control" id="last_name" placeholder="" />
+                                        <label for="last_name">Số điện thoại (* Bắt buộc điền)</label>
+                                        <input v-model="order.phoneNumber" type="text" class="form-control" id="last_name" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label for="company_name">Company Name(Optional)</label>
-                                        <input type="text" class="form-control" id="company_name" placeholder="" />
+                                        <label for="company_name">Địa chỉ email của bạn (* Bắt buộc điền)</label>
+                                        <input v-model="order.email" type="text" class="form-control" id="company_name" placeholder="" />
                                     </div>
                                 </div>
         
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-group mb-4">
-                                        <label for="company_name">Country</label>
-                                        <select class="form-control">
-                                        <option value="">Select an Option</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
+                                        <label for="company_name">Tỉnh/ thành phố (* Bắt buộc điền)</label>
+                                        <select v-model="order.province" class="form-control">
+                                            <option value="">Chọn tỉnh/ thành phố</option>
+                                            <option value="Hưng Yên">Hưng Yên</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-4">
+                                        <label for="company_name">Quận huyện (* Bắt buộc điền)</label>
+                                        <select v-model="order.district" class="form-control">
+                                            <option value="">Chọn quận huyện</option>
+                                            <option value="Khoái Châu">Khoái Châu</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-4">
+                                        <label for="company_name">Phường xã (* Bắt buộc điền)</label>
+                                        <select v-model="order.ward" class="form-control">
+                                            <option value="">Chọn Phường xã</option>
+                                            <option value="Đại Hưng">Đại Hưng</option>
                                         </select>
                                     </div>
                                 </div>
         
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-group mb-4">
-                                        <label for="first_name">Street Address</label>
-                                        <input type="text" class="form-control" id="street" placeholder="" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="first_name">Apartment, suite, unit etc. (optional) (optional)</label>
-                                        <input type="text" class="form-control" id="apartment" placeholder="Apartment" />
-                                    </div>
-                                </div>
-        
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="first_name">Town / City </label>
-                                        <input type="text" class="form-control" id="city" placeholder="Apartment" />
-                                    </div>
-                                </div>
-        
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="company_name">District </label>
-                                        <select class="form-control">
-                                        <option value="">Select an Option</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="first_name">Postcode / ZIP (optional)</label>
-                                        <input type="text" class="form-control" id="postcode" placeholder=""/>
+                                        <label for="first_name">ĐC hi tiết (VD: Toà nhà N03T6) (* Bắt buộc điền)</label>
+                                        <input v-model="order.address" type="text" class="form-control" id="street" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label for="first_name">Phone </label>
-                                        <input type="text" class="form-control" id="phone" placeholder="" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="first_name">Email address </label>
-                                        <input type="text" class="form-control" id="email" placeholder="" />
-                                    </div>
-                                </div>
-        
-                                <div class="col-lg-12">
-                                <div class="form-check mb-4">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                                    <label class="form-check-label" for="exampleCheck1">Create an account?</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-check mb-4">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck2" />
-                                        <label class="form-check-label" for="exampleCheck2">Ship to a different address?</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label for="first_name">Order notes (optional)</label>
-                                        <textarea class="form-control" id="msg" cols="30" rows="5" placeholder="Notes about order e:g: want to say something"></textarea>
+                                        <label for="first_name">Ghi chú đặt hàng (tùy chọn)</label>
+                                        <textarea v-model="order.description" class="form-control" id="msg" cols="30" rows="5" placeholder="Ghi chú về thứ tự đơn hàng của bạn muốn?"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -161,81 +107,166 @@
                     
                     <div class="col-md-6 col-lg-4">
                         <div class="product-checkout-details mt-5 mt-lg-0">
-                            <h4 class="mb-4 border-bottom pb-4">Order Summary</h4>
+                            <h4 class="mb-4 border-bottom pb-4">Tóm tắt đơn hàng</h4>
+                            <div class="coupon">
+                                <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="Mã giảm giá" /> 
+                                <button type="button" class="btn-coupon btn btn-black btn-small" name="apply_coupon">Áp dụng</button>
+                                <span class="float-right mt-3 mt-lg-0">
+                                </span>
+                            </div>
         
-                            <div class="media product-card">
-                                <p>Kirby Shirt</p>
+                            <div v-for="item in cart?.cartDetail" :key="item.productID" class="media product-card">
+                                <p>{{ item.productName }}</p>
                                 <div class="media-body text-right">
-                                    <p class="h5">1 x $249</p>
+                                    <p style="white-space: nowrap;" class="h5">{{ item.quantity }} x {{ Base.Comma(item.price) }} đ</p>
                                 </div>
                             </div>
         
                             <ul class="summary-prices list-unstyled mb-4">
                                 <li class="d-flex justify-content-between">
-                                    <span >Subtotal:</span>
-                                    <span class="h5">$190</span>
+                                    <span >Tổng phụ:</span>
+                                    <span class="h5">{{ Base.Comma(Base.calcTotalPriceCart(cart)) }} đ</span>
                                 </li>
                                 <li class="d-flex justify-content-between">
-                                    <span >Shipping:</span>
-                                    <span class="h5">Free</span>
+                                    <span >Phí ship:</span>
+                                    <span class="h5">Miễn phí</span>
                                 </li>
                                 <li class="d-flex justify-content-between">
-                                    <span>Total</span>
-                                    <span class="h5">$250</span>
+                                    <span>Tổng tiền</span>
+                                    <span class="h5">{{ Base.Comma(Base.calcTotalPriceCart(cart)) }} đ</span>
                                 </li>
                             </ul>
         
                             <form action="#">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
+                                    <input v-model.number="order.typeCheckout"  class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" :value="0" checked />
                                     <label class="form-check-label" for="exampleRadios1">
-                                    Direct bank transfer 
+                                        Chuyển khoản trực tiếp
                                     </label>
         
                                     <div class="alert alert-secondary mt-3" role="alert">
-                                    Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                        Thực hiện thanh toán của bạn trực tiếp vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng ID đơn đặt hàng của bạn làm tham chiếu thanh toán. Đơn đặt hàng của bạn sẽ không được giao cho đến khi số tiền trong tài khoản của chúng tôi được thanh toán.
                                     </div>
                                 </div>
         
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" />
+                                    <input v-model.number="order.typeCheckout" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" :value="1" />
                                     <label class="form-check-label" for="exampleRadios2">
-                                    Check payments 
+                                    Kiểm tra hàng và thanh toán
                                     </label>
                                 </div>
-        
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck3" />
-                                    <label class="form-check-label" for="exampleCheck3">I have read and agree to the website terms and conditions *</label>
-                                    </div>
                             </form>
         
                             <div class="info mt-4 border-top pt-4 mb-5">
-                                Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#">privacy policy</a>.
+                                    Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn đặt hàng, hỗ trợ trải nghiệm của bạn trên trang web này và cho các mục đích khác được mô tả trong chính sách bảo mật của chúng tôi.
                             </div>
-                            <a href="/checkout" class="btn btn-main btn-small">Place Order</a>
+                            <router-link to="/checkout" @click="checkout" class="btn btn-main btn-small">Đặt hàng</router-link>
                         </div>
                     </div>
                 </div>
                 </div>
             </div>
         </div>
-        
-        
-       
-            <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content py-5">
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Enter Coupon Code" />
-                            </div>
-                            <button type="button" class="btn btn-main btn-small" data-dismiss="modal">Apply Coupon</button>
-                        </form>
-                    </div>
-                </div>
-                </div>
-            </div>
+          <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+              <div class="modal-content py-5">
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                          <input class="form-control" type="text" placeholder="Enter Coupon Code" />
+                          </div>
+                          <button type="button" class="btn btn-main btn-small" data-dismiss="modal">Apply Coupon</button>
+                      </form>
+                  </div>
+              </div>
+              </div>
+          </div>
         </div>
 </template>
+
+<script setup lang="ts">
+import CartApi from "@/api/module/cart";
+import { Cart, Grid, Order } from "@/core/public_api";
+import { computed, onBeforeMount, reactive, ref } from "vue";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+const api:CartApi = new CartApi();
+const Base:Grid = reactive(new Grid(api));
+
+const cart = computed<Cart>(() => Base.store.state.config.cart);
+const order = ref<Order>(new Order());
+
+function checkout(){
+  if(cart.value.cartDetail.length === 0){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Hãy chọn mua sản phẩn vào giỏ hàng rồi thanh toán',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    return;
+  }
+  if(!order.value.userName.trim()||
+  !order.value.phoneNumber.trim()||
+  !order.value.email.trim()||
+  !order.value.province.trim()||
+  !order.value.ward.trim()||
+  !order.value.district.trim()||
+  !order.value.address.trim()){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Vui lòng điền đầy đủ thông tin mua hàng',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    return;
+  }
+  order.value.currentUser = Base.currentUser.currentUser;
+  Swal.fire({
+    title: 'Xác nhận thanh toán đặt hàng?',
+    text: "Đơn hàng của bạn sẽ được lên lịch thanh toán và vận chuyển đến bạn!",
+    icon: 'success',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Xác nhận',
+    cancelButtonText: 'Huỷ'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Base.apiService.callApi(Base.apiCart.checkout, order.value, (res: any)=> {
+        Base.store.dispatch(`config/setCartAction`, new Cart());
+        order.value = new Order();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Đã xác nhận đơn hàng, hãy đến quản lý đơn hàng để theo dõi đơn hàng',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      });
+    }
+  })
+}
+
+onBeforeMount(() => {
+  window.scrollTo({
+    top: 0,
+  })
+})
+</script>
+
+<style scoped>
+.coupon{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.btn-coupon{
+    margin-left: 8px;
+    padding: 4px 8px;
+    height: 45px;
+    width: 150px;
+}
+</style>

@@ -24,6 +24,11 @@ const router = createRouter({
       meta: { title: 'Thanh toán' }
     },
     {
+      path: '/order',
+      component: () => import('../views/OrderPage.vue'),
+      meta: { title: 'Quản lý đơn hàng' }
+    },
+    {
       path: '/productDetails',
       component: () => import('../views/ProductPageDetail.vue'),
       meta: { title: 'Chi tiết sản phẩm' }

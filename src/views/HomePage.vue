@@ -49,7 +49,7 @@
                             </div>
                 
                             <div class="product-hover-overlay">
-                                <RouterLink to="/"><i class="tf-ion-android-cart"></i></RouterLink>
+                                <RouterLink to="/" @click="Base.addToCart(item.productID)"><i class="tf-ion-android-cart"></i></RouterLink>
                                 </div>
                 
                             <div class="product-info">
@@ -180,9 +180,6 @@ onBeforeMount(() => {
     Base.apiService.callApi(api.getProductPrice, null, (res: any)=> {
         ProductPrice.value = res;
     });  
-    window.scrollTo({
-        top: 0,
-    })
 })
 
 </script>

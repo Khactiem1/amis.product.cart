@@ -1,4 +1,7 @@
+import { EntitySystem } from "../common/entity_system";
+import { Guid } from "../common/guid";
 import { SystemConstants } from "../common/system.constants";
+import { CurrentUser } from "../entities/services-system/current_user";
 
 /**
  * Chứa các hàm thao tác với localstorage
@@ -30,5 +33,11 @@ export class StorageService {
 
 	public static removeItemWithSystemConstants(key: string){
 		this.removeItem(SystemConstants.get(key));
+	}
+	public static createCurrentUser(){
+		const currentUser = new CurrentUser();
+		currentUser.currentUser = Guid.newGuid();
+		this.setItem(SystemConstants.get(EntitySystem.CurrentUser), JSON.stringify(currentUser));
+		return currentUser;
 	}
 }

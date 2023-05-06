@@ -55,7 +55,7 @@ export class Product extends BaseEntity{
   public description: string = '';
 
   /**  Giá*/
-  public price?:number = undefined ;
+  public price:number = 0 ;
 
   /** Giới tính */
   public gender: Gender = Gender.Male;

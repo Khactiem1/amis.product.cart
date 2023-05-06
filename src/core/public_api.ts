@@ -21,6 +21,7 @@ export * from './lib/common/utils_components';
 // Services
 export * from './lib/entities/services-system/action_table';
 export * from './lib/entities/services-system/module_name';
+export * from './lib/entities/services-system/current_user';
 export * from './lib/entities/services-system/enum';
 export * from './lib/entities/services-system/service_response';
 
@@ -34,6 +35,10 @@ export * from './lib/entities/inventory/product';
 export * from './lib/entities/inventory/category';
 export * from './lib/entities/inventory/origin';
 export * from './lib/entities/inventory/trademark';
+
+// Cart
+export * from './lib/entities/cart/cart';
+export * from './lib/entities/cart/order';
 
 /**
  * services

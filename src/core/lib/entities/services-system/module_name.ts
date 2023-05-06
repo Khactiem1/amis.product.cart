@@ -13,4 +13,7 @@ export class ModuleName {
   public static Origin: string = 'origin';
   public static Product: string = 'product';
   public static Trademark: string = 'trademark';
+
+  /** Cart */
+  public static Cart: string = 'cart';
 }

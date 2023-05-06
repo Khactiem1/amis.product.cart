@@ -5,7 +5,7 @@
               <div class="row">
                       <div class="col-md-6 col-lg-4 col-sm-6 mb-5 mb-lg-0 text-center text-sm-left mr-auto">
                       <div class="footer-widget">
-                              <h4 class="mb-4">E-Shop</h4>
+                              <h4 class="mb-4">Tuấn Hưng Watch</h4>
                               <p class="lead">Đồng hành cùng chúng tôi.</p>
                               
                               <div class="">
