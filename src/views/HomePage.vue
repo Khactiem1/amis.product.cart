@@ -68,7 +68,7 @@
           <div class="container">
               <div class="row">
               <div class="col-lg-4 col-sm-12 col-md-12">
-                  <img src="src/assets/images/adsv.jpg" alt="Product big thumb"  class="img-fluid w-100" />
+                  <img src="../../src/assets/images/adsv.jpg" alt="Product big thumb"  class="img-fluid w-100" />
               </div>
 
               <div class="col-lg-4 col-sm-6 col-md-6">

@@ -53,7 +53,7 @@ export class UtilsComponents{
     const date = new Date(dateString);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-    const day = date.getDate();
+    const day = date.getDate().toString() ? date.getDate().toString() : "";
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();

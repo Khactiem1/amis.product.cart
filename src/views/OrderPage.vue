@@ -13,8 +13,8 @@
                                     <th class="product-name no-warp">Tên khách hàng</th>
                                     <th class="product-name no-warp">Số điện thoại</th>
                                     <th class="product-name no-warp">Email</th>
-                                    <th class="product-price">Địa chỉ</th>
-                                    <th class="product-quantity">Ghi chú</th>
+                                    <th class="product-price no-warp">Địa chỉ</th>
+                                    <th class="product-quantity no-warp">Ghi chú</th>
                                     <th class="product-quantity no-warp">Ngày đặt hàng</th>
                                     <th class="product-subtotal"></th>
                                 </tr>

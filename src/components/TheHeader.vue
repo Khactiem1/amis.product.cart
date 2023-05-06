@@ -22,8 +22,8 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
                      
                     <li><RouterLink class="nav-link" to="/shop">Sản phẩm</RouterLink></li>
-                    <li><RouterLink class="nav-link" to="/checkout">Thanh toán</RouterLink></li>
                     <li><RouterLink class="nav-link" to="/cart">Giỏ hàng</RouterLink></li>
+                    <li><RouterLink class="nav-link" to="/checkout">Thanh toán</RouterLink></li>
                 </ul>
                 </li>
             </ul>
