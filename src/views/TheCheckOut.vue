@@ -62,18 +62,18 @@
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="company_name">Tỉnh/ thành phố (* Bắt buộc điền)</label>
-                                        <select v-model="order.province" class="form-control">
+                                        <select @change="changeAddress('province')" v-model="order.province" class="form-control">
                                             <option value="">Chọn tỉnh/ thành phố</option>
-                                            <option value="Hưng Yên">Hưng Yên</option>
+                                            <option v-for="(item, index) in address.province" :key="index" :value="item.id">{{ item._name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="company_name">Quận huyện (* Bắt buộc điền)</label>
-                                        <select v-model="order.district" class="form-control">
+                                        <select @change="changeAddress('district')" v-model="order.district" class="form-control">
                                             <option value="">Chọn quận huyện</option>
-                                            <option value="Khoái Châu">Khoái Châu</option>
+                                            <option v-for="(item, index) in address.district" :key="index" :value="item.id">{{ item._name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                         <label for="company_name">Phường xã (* Bắt buộc điền)</label>
                                         <select v-model="order.ward" class="form-control">
                                             <option value="">Chọn Phường xã</option>
-                                            <option value="Đại Hưng">Đại Hưng</option>
+                                            <option v-for="(item, index) in address.ward" :key="index" :value="item._name">{{ item._name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -210,9 +210,9 @@ function checkout(){
   if(!order.value.userName.trim()||
   !order.value.phoneNumber.trim()||
   !order.value.email.trim()||
-  !order.value.province.trim()||
-  !order.value.ward.trim()||
-  !order.value.district.trim()||
+  !order.value.province||
+  !order.value.ward||
+  !order.value.district||
   !order.value.address.trim()){
     Swal.fire({
       position: 'top-end',
@@ -235,6 +235,8 @@ function checkout(){
     cancelButtonText: 'Huỷ'
   }).then((result) => {
     if (result.isConfirmed) {
+      order.value.province = address.value.province.find((item:any) => item.id == order.value.province)._name;
+      order.value.district = address.value.district.find((item:any) => item.id == order.value.district)._name;
       Base.apiService.callApi(Base.apiCart.checkout, order.value, (res: any)=> {
         Base.store.dispatch(`config/setCartAction`, new Cart());
         order.value = new Order();
@@ -250,7 +252,35 @@ function checkout(){
   })
 }
 
+const address:any = ref({
+  province: [],
+  district: [],
+  ward: []
+});
+
+function changeAddress(value: string){
+  if(value == 'province'){
+    address.value.district = [];
+    address.value.ward = [];
+    order.value.district = "";
+    order.value.ward = "";
+    Base.apiService.callApi(Base.apiCart.getAddress, {v_Address: 'district', v_ID: Number(order.value.province)}, (res: any)=> {
+      address.value.district = res;
+    });
+  }
+  else if(value == 'district'){
+    address.value.ward = [];
+    order.value.ward = "";
+    Base.apiService.callApi(Base.apiCart.getAddress, {v_Address: 'ward', v_ID: Number(order.value.district)}, (res: any)=> {
+      address.value.ward = res;
+    });
+  }
+}
+
 onBeforeMount(() => {
+  Base.apiService.callApi(Base.apiCart.getAddress, {v_Address: 'province', v_ID: 0}, (res: any)=> {
+    address.value.province = res;
+  });
   window.scrollTo({
     top: 0,
   })

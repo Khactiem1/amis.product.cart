@@ -1,5 +1,6 @@
 import { Product } from "../inventory/product";
 import { CurrentUser } from "../services-system/current_user";
+import { StatusOrder } from "../services-system/enum";
 
 export class Order extends CurrentUser {
   public orderID: string;
@@ -12,6 +13,7 @@ export class Order extends CurrentUser {
   public address: string = '';
   public description: string = '';
   public typeCheckout: number = 1;
+  public status: StatusOrder = StatusOrder.WaitConfirm;
   public orderDetail: OrderDetail [] = [];
 }
 

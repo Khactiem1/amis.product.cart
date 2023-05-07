@@ -123,3 +123,34 @@ export enum StatusCode {
   /** Không có quyền */
   Authentication = 401,
 }
+
+/**
+ * StatusOrder
+ * Khắc Tiềm - 08.03.2023
+ */
+export enum StatusOrder {
+  /// <summary>
+  /// Chờ xác nhận
+  /// </summary>
+  WaitConfirm = 0,
+
+  /// <summary>
+  /// Đã xác nhận
+  /// </summary>
+  Confirm = 1,
+
+  /// <summary>
+  /// Đang giao hàng
+  /// </summary>
+  Delivery = 2,
+
+  /// <summary>
+  /// Đã giao hàng
+  /// </summary>
+  Delivered = 3,
+
+  /// <summary>
+  /// Đơn bị huỷ
+  /// </summary>
+  Destroy = 4,
+}

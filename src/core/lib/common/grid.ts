@@ -1,4 +1,4 @@
-import { ApiService, Cart, CartDetail, CurrentUser, Order, OrderDetail } from '@/core/public_api';
+import { ApiService, Cart, CartDetail, CurrentUser, Order, OrderDetail, StatusOrder } from '@/core/public_api';
 import { Utils } from './utils';
 import type BaseApi from '@/api/base_api';
 import CartApi from '@/api/module/cart';
@@ -116,5 +116,13 @@ export class Grid extends Utils{
         });
       }
     })
+  }
+
+  public formatStatus = (status: StatusOrder) => {
+    return status === StatusOrder.WaitConfirm ? "Chờ xác nhận" :
+    status === StatusOrder.Confirm ? "Đã xác nhận" :
+    status === StatusOrder.Delivery ? "Đang giao hàng" :
+    status === StatusOrder.Delivered ? "Đã giao hàng" :
+    status === StatusOrder.Destroy ? "Đơn đã bị huỷ" : ""
   }
 }

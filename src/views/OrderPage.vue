@@ -1,5 +1,25 @@
 <template>
   <div className="checkout-container">
+    <section class="page-header">
+            <div class="overly"></div> 	
+            <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                <div class="content text-center">
+                    <h1 class="mb-3">Đơn hàng</h1>
+                    <p>Tiến hành theo dõi đơn hàng của bạn tại đây, chúng tôi sẽ liên hệ với bạn, thường xuyên cập nhật tình trạng đơn hàng đến vớI bạn</p>
+        
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent justify-content-center">
+                    <li class="breadcrumb-item"><router-link to="/">Trang chủ</router-link></li>
+                    <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
+                    </ol>
+                </nav>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
     <section class="cart shopping page-wrapper">
             <div class="container">
                 <h3>Đơn đã đặt hàng</h3>
@@ -13,9 +33,9 @@
                                     <th class="product-name no-warp">Tên khách hàng</th>
                                     <th class="product-name no-warp">Số điện thoại</th>
                                     <th class="product-name no-warp">Email</th>
-                                    <th class="product-price no-warp">Địa chỉ</th>
                                     <th class="product-quantity no-warp">Ghi chú</th>
                                     <th class="product-quantity no-warp">Ngày đặt hàng</th>
+                                    <th class="product-quantity no-warp">Trạng thái</th>
                                     <th class="product-subtotal"></th>
                                 </tr>
                                 </thead>
@@ -32,13 +52,13 @@
                                       {{ item.email }}
                                     </td>
                                     <td class="product-thumbnail">
-                                      {{ item.address }} -  {{ item.ward }} -  {{ item.district }} -  {{ item.province }}
-                                    </td>
-                                    <td class="product-thumbnail">
                                       {{ item.description }}
                                     </td>
                                     <td class="product-thumbnail">
-                                      {{ Base.formatDateDDMMYYYYHHMMSS(item.modifiedDate.toString()) }}
+                                      {{ Base.formatDateDDMMYYYYHHMMSS(item.modifiedDate + '') }}
+                                    </td>
+                                    <td class="product-thumbnail">
+                                      <span> {{ Base.formatStatus(item.status) }}</span>
                                     </td>
                                     <td class="product-thumbnail">
                                       <button @click="showOrderDetail(item.orderID)" type="button" class="btn-coupon btn btn-black btn-small" name="apply_coupon">Xem chi tiết</button>
@@ -74,6 +94,15 @@
                 <div class="col-lg-12">
                     <div class="product-list">
                         <div class="cart-form">
+                          <p>
+                            Đơn hàng: {{ orderDetail.userName }} - {{ orderDetail.phoneNumber }} - {{ orderDetail.email }} - {{ Base.formatDateDDMMYYYYHHMMSS(orderDetail.modifiedDate + '') }}
+                            <br>
+                            Địa chỉ: {{ orderDetail.address }} -  {{ orderDetail.ward }} -  {{ orderDetail.district }} -  {{ orderDetail.province }}
+                            <br>
+                            Ghi chú: {{ orderDetail.description }}
+                            <br>
+                            Trạng thái: {{ Base.formatStatus(orderDetail.status) }}
+                          </p>
                             <table class="table shop_table shop_table_responsive cart" cellspacing="0">
                                 <thead>
                                 <tr>
@@ -118,8 +147,14 @@
                     </div>
                 </div>
                 </div>
-                <div class="row justify-content-end">
-                    <div class="col-lg-4">
+                <div class="row" style="justify-content: space-between;">
+                  <div class="col-lg-6">
+                    <div class="cart-info card p-4 mt-4">
+                        <h4 class="mb-4">Trạng thái đơn hàng</h4>
+                        <p v-for="(item, index) in statusList" :key="index" style="margin: 0;"> - {{ item.Comment }} ({{ Base.formatDateDDMMYYYYHHMMSS(item.CreatedDate + '') }})</p>
+                    </div>
+                    </div>
+                    <div class="col-lg-6">
                     <div class="cart-info card p-4 mt-4">
                         <h4 class="mb-4">tổng số giỏ hàng</h4>
                         <ul class="list-unstyled mb-4">
@@ -162,8 +197,11 @@ const api:CartApi = new CartApi();
 const Base:Grid = reactive(new Grid(api));
 const orderList = ref<Order []>([]);
 const orderDetail = ref<Order>(new Order()); 
-
+const statusList:any = ref([]);
 function showOrderDetail(orderID: string){
+  Base.apiService.callApi(api.getStatusOrder, {v_OrderID: orderID}, (res: any) => {
+    statusList.value = [...res];
+  });
   Base.apiService.callApi(api.getOrderByID, {v_OrderID: orderID}, (res: any)=> {
     orderDetail.value = res;
     const elm = document.getElementById('openDetail');
