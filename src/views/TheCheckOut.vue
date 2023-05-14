@@ -109,8 +109,8 @@
                         <div class="product-checkout-details mt-5 mt-lg-0">
                             <h4 class="mb-4 border-bottom pb-4">Tóm tắt đơn hàng</h4>
                             <div class="coupon">
-                                <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="Mã giảm giá" /> 
-                                <button type="button" class="btn-coupon btn btn-black btn-small" name="apply_coupon">Áp dụng</button>
+                                <input v-model="coupon" type="text" name="coupon_code" class="input-text form-control" id="coupon_code" placeholder="Mã giảm giá" /> 
+                                <button @click="applyCoupon" type="button" class="btn-coupon btn btn-black btn-small" name="apply_coupon">Áp dụng</button>
                                 <span class="float-right mt-3 mt-lg-0">
                                 </span>
                             </div>
@@ -128,12 +128,16 @@
                                     <span class="h5">{{ Base.Comma(Base.calcTotalPriceCart(cart)) }} đ</span>
                                 </li>
                                 <li class="d-flex justify-content-between">
+                                    <span >Giảm giá:</span>
+                                    <span class="h5">{{ cart.couponCode }} ({{ percent ? percent : 0 }}%) (-{{ Base.Comma((Base.calcTotalPriceCart(cart) * ((percent ? percent : 0) / 100))) }} đ)</span>
+                                </li>
+                                <li class="d-flex justify-content-between">
                                     <span >Phí ship:</span>
                                     <span class="h5">Miễn phí</span>
                                 </li>
                                 <li class="d-flex justify-content-between">
-                                    <span>Tổng tiền</span>
-                                    <span class="h5">{{ Base.Comma(Base.calcTotalPriceCart(cart)) }} đ</span>
+                                    <span>Thành tiền</span>
+                                    <span class="h5">{{ Base.Comma(Base.calcTotalPriceCart(cart) - (Base.calcTotalPriceCart(cart) * ((percent ? percent : 0) / 100))) }} đ</span>
                                 </li>
                             </ul>
         
@@ -186,15 +190,31 @@
 
 <script setup lang="ts">
 import CartApi from "@/api/module/cart";
+import CouponApi from "@/api/module/coupon";
 import { Cart, Grid, Order } from "@/core/public_api";
 import { computed, onBeforeMount, reactive, ref } from "vue";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const api:CartApi = new CartApi();
+const couponApi:CouponApi = new CouponApi();
 const Base:Grid = reactive(new Grid(api));
 
 const cart = computed<Cart>(() => Base.store.state.config.cart);
 const order = ref<Order>(new Order());
+const percent = ref(0);
+const coupon = ref('');
+function applyCoupon(){
+  Base.apiService.callApi(couponApi.getRecordByCode, coupon.value, (res: any)=> {
+    if(res && res.percent){
+      percent.value = res.percent;
+      order.value.couponID = res.couponID;
+    }
+    else {
+      percent.value = 0;
+      order.value.couponID = '';
+    }
+  });
+}
 
 function checkout(){
   if(cart.value.cartDetail.length === 0){
@@ -289,14 +309,14 @@ onBeforeMount(() => {
 
 <style scoped>
 .coupon{
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 }
 .btn-coupon{
-    margin-left: 8px;
-    padding: 4px 8px;
-    height: 45px;
-    width: 150px;
+  margin-left: 8px;
+  padding: 4px 8px;
+  height: 45px;
+  width: 150px;
 }
 </style>

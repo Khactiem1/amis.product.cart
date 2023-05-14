@@ -2,6 +2,9 @@ import { Product } from "../inventory/product";
 import { CurrentUser } from "../services-system/current_user";
 
 export class Cart extends CurrentUser {
+  public couponID?: string = '';
+  public couponCode?: string = '';
+  public percent?: number = 0;
   public cartDetail: CartDetail [] = [];
 }
 

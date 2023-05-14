@@ -163,12 +163,16 @@
                             <span>{{ Base.Comma(Base.calcTotalPriceOrder(orderDetail)) }} đ</span>
                             </li>
                             <li class="d-flex justify-content-between pb-2 mb-3">
+                            <h5>Giảm giá</h5>
+                            <span>{{ orderDetail.couponCode }} ({{ orderDetail.percent }}%) (-{{ Base.Comma((Base.calcTotalPriceOrder(orderDetail) * ((orderDetail.percent ? orderDetail.percent : 0) / 100))) }} đ)</span>
+                            </li>
+                            <li class="d-flex justify-content-between pb-2 mb-3">
                             <h5>Phí ship</h5>
                             <span>Miễn phí</span>
                             </li>
                             <li class="d-flex justify-content-between pb-2">
-                            <h5>Tổng tiền</h5>
-                            <span>{{ Base.Comma(Base.calcTotalPriceOrder(orderDetail)) }} đ</span>
+                            <h5>Thành tiền</h5>
+                            <span>{{ Base.Comma(Base.calcTotalPriceOrder(orderDetail) - (Base.calcTotalPriceOrder(orderDetail) * (orderDetail.percent / 100))) }} đ</span>
                             </li>
                         </ul>
                     </div>

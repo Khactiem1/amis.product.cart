@@ -13,6 +13,9 @@ export class Order extends CurrentUser {
   public address: string = '';
   public description: string = '';
   public typeCheckout: number = 1;
+  public couponID?: string = '';
+  public couponCode: string = '';
+  public percent: number = 0;
   public status: StatusOrder = StatusOrder.WaitConfirm;
   public orderDetail: OrderDetail [] = [];
 }

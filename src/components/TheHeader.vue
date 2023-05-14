@@ -34,9 +34,10 @@
               <input type="search" @input="handleSearchData" class="form-control rounded" placeholder="Tìm sản phẩm" aria-label="Search" aria-describedby="search-addon" />
             </li>
             <li class="dropdown cart-nav dropdown-slide list-inline-item">
-                <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
-                <i class="tf-ion-android-cart"></i>
-                </a>
+                <router-link to="/cart" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
+                  <i class="tf-ion-android-cart"></i>
+                  <span v-if="cart?.cartDetail.length > 0">{{ cart?.cartDetail.length }}</span>
+                </router-link>
                 <div style="width: 350px !important;" class="dropdown-menu cart-dropdown">
                
                 <div v-for="item in cart?.cartDetail" :key="item.productID" class="media">
@@ -89,3 +90,25 @@ onBeforeMount(() => {
 });
 
 </script>
+
+<style scoped>
+.dropdown-toggle.cart-icon{
+  position: relative;
+}
+.dropdown-toggle.cart-icon span{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  background-color: #fb5c42;
+  padding: 0px 3px;
+  border-radius: 50%;
+  line-height: 15px;
+  width: 20px;
+  height: 20px;
+  top: -15px;
+  right: -6px;
+}
+</style>
